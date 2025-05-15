@@ -3,6 +3,9 @@
 # Exit on error
 set -e
 
+# Switch to master branch
+git checkout master
+
 # Build the project
 echo "Building project..."
 pnpm build
