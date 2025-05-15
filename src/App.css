@@ -1,0 +1,310 @@
+#root {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #0078D4 0%, #00A2FF 100%);
+  margin: 0;
+  padding: 0;
+}
+
+.game {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #0078D4 0%, #00A2FF 100%);
+  border: none;
+  overflow: hidden;
+}
+
+.bird {
+  position: absolute;
+  width: 60px;
+  height: 40px;
+  background-color: #FF4D4D;
+  border-radius: 20px;
+  left: 100px;
+  transition: transform 0.1s;
+  box-shadow: 0 0 20px rgba(255, 77, 77, 0.5);
+  transform-origin: center;
+}
+
+.bird::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #FF4D4D;
+  border-radius: 50%;
+  top: -10px;
+  left: 45px;
+  transform: rotate(-30deg);
+}
+
+.bird::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 15px;
+  background-color: #FF4D4D;
+  border-radius: 50% 50% 0 0;
+  top: 5px;
+  left: -20px;
+  transform: rotate(45deg);
+}
+
+.fire {
+  position: absolute;
+  left: 70px;
+  top: 15px;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.fire.active {
+  opacity: 1;
+}
+
+.fire::before,
+.fire::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #FF4500, transparent 70%);
+  animation: flicker 0.1s infinite;
+}
+
+.fire::after {
+  background: radial-gradient(circle at center, #FFA500, transparent 70%);
+  animation-delay: 0.05s;
+}
+
+.fire-particles {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.fire-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #FF4500;
+  border-radius: 50%;
+  animation: particle-float 0.5s ease-out forwards;
+}
+
+@keyframes flicker {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes breathe-fire {
+  0% {
+    width: 0;
+    height: 0;
+    transform: scale(0);
+  }
+  20% {
+    width: 40px;
+    height: 30px;
+    transform: scale(1);
+  }
+  100% {
+    width: 0;
+    height: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+.fire.active {
+  animation: breathe-fire 0.5s ease-out;
+}
+
+.fire.active .fire-particles {
+  animation: particle-spawn 0.5s linear;
+}
+
+@keyframes particle-spawn {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes flap-wings {
+  0% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(-5deg);
+  }
+}
+
+.bird {
+  animation: flap-wings 0.2s infinite;
+}
+
+.pipe {
+  position: absolute;
+  width: 80px;
+  background: linear-gradient(90deg, #004E8C 0%, #0078D4 100%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.pipe.top {
+  top: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.pipe.bottom {
+  bottom: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.game-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 78, 140, 0.9);
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 48px;
+  z-index: 1000;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  border: 2px solid #00A2FF;
+}
+
+.score {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  background-color: rgba(0, 78, 140, 0.7);
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 2px solid #00A2FF;
+}
+
+.bomb {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(45deg, #004E8C 0%, #0078D4 100%);
+  border-radius: 50%;
+  transform: rotate(45deg);
+  animation: bomb-fall 0.5s linear infinite;
+  box-shadow: 0 0 10px rgba(0, 120, 212, 0.5);
+}
+
+@keyframes bomb-fall {
+  0% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(225deg);
+  }
+}
+
+.controls {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 78, 140, 0.8);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 24px;
+  z-index: 100;
+  border: 2px solid #00A2FF;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  display: none;
+}
